@@ -14,9 +14,7 @@ public class Test {
 
 		int type = rand(3);
 		int[] rhythm = Rhythm.get(type); // 节奏型
-
-		type = rand(3);
-		int[] path = Path.get(type); // 走向
+		int[] path = Path.get(rand(3)); // 走向
 
 		while (true) {
 			for (int i = 0; i < rhythm.length; i++) {
@@ -56,7 +54,7 @@ public class Test {
 				}
 				Thread.sleep(240);
 			}
-			section = (section == 4) ? 1 : section + 1;
+			section = (section == path.length) ? 1 : section + 1;
 		}
 	}
 

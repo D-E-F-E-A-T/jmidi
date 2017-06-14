@@ -5,7 +5,7 @@ public class Melody {
 	public static boolean get(int chord, int key) {
 		int[] i = new int[0];
 		if (chord == 6)
-			i = new int[] { 1, 2, 3, 6, 7 };
+			i = new int[] { 1, 2, 3, 5, 6, 7 };
 		if (chord == 5)
 			i = new int[] { 1, 2, 3, 5, 7 };
 		if (chord == 4)
