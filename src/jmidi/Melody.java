@@ -1,5 +1,10 @@
 package jmidi;
 
+/**
+ * 旋律可用音符
+ * 
+ * @author vermisse
+ */
 public class Melody {
 
 	public static boolean get(int chord, int key) {

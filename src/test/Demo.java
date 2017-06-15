@@ -1,4 +1,4 @@
-package jmidi;
+package test;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,13 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
+/**
+ * 播放mid文件
+ * 
+ * @author vermisse
+ */
 public class Demo {
-	private static String midiFile = "F:\\BaiduNetdiskDownload\\test.mid"; //mid文件路径
+	private static String midiFile = "F:\\BaiduNetdiskDownload\\test.mid"; // mid文件路径
 	private static String midiURI = "http://hostname/midifile";
 	private static Sequence sequence = null;
 
@@ -24,7 +29,8 @@ public class Demo {
 			// 从本地文件加载midi
 			sequence = MidiSystem.getSequence(new File(midiFile));
 			// 从url加载midi
-			// sequence = MidiSystem.getSequence(new URL("http://hostname/midifile"));
+			// sequence = MidiSystem.getSequence(new
+			// URL("http://hostname/midifile"));
 			// Create a sequencer for the sequence
 			Sequencer sequencer = MidiSystem.getSequencer();
 			sequencer.open();
