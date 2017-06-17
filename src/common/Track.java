@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import jmidi.Note;
+
 public class Track {
 
     private List<MidiEvent> events;
@@ -147,5 +149,11 @@ public class Track {
             return true;
         }
     }
-
+    
+	public void add(int key, int time, int volume) throws Exception {
+		ChannelMessage on = ChannelMessage.noteOn(0, key, volume);
+		ChannelMessage off = ChannelMessage.noteOff(0, key, volume);
+		this.add(new MidiEvent(off, time));
+		this.add(new MidiEvent(on, time));
+	}
 }

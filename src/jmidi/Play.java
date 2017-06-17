@@ -1,8 +1,21 @@
 package jmidi;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Date;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaEventListener;
+import javax.sound.midi.MetaMessage;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Synthesizer;
 import javax.sound.midi.SysexMessage;
 
 /**
@@ -11,7 +24,9 @@ import javax.sound.midi.SysexMessage;
  * @author vermisse
  */
 public class Play {
-
+	
+	private static Sequence sequence;
+	
 	Receiver receiver;
 	ShortMessage msg = new ShortMessage();
 	SysexMessage sys = new SysexMessage();
@@ -32,6 +47,33 @@ public class Play {
 	        receiver.send(msg, -1);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public Play(File file){
+		try {
+			// 从本地文件加载midi
+			sequence = MidiSystem.getSequence(file);
+			// 从url加载midi
+			// sequence = MidiSystem.getSequence(new URL("http://hostname/midifile"));
+			// Create a sequencer for the sequence
+			final Sequencer sequencer = MidiSystem.getSequencer();
+			sequencer.open();
+			sequencer.setSequence(sequence);
+			// Start playing
+			sequencer.start();
+			sequencer.addMetaEventListener(new MetaEventListener() {
+				public void meta(MetaMessage event) {
+					// Sequencer is done playing
+					if (event.getType() == 47) {
+						System.exit(0);
+					}
+				}
+			});
+		} catch (MalformedURLException e) {
+		} catch (IOException e) {
+		} catch (MidiUnavailableException e) {
+		} catch (InvalidMidiDataException e) {
 		}
 	}
 

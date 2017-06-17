@@ -8,6 +8,7 @@ public class Rhythm {
 		{ 1, 1, 1, 1, 0, 0, 1, 0 },
 		{ 1, 0, 1, 1, 0, 1, 1, 1 },
 		{ 1, 1, 1, 1, 0, 1, 1, 0 },
+		{ 1, 0, 1, 1, 1, 1 },
 	};
 
 	public static int[] get(int type) {
