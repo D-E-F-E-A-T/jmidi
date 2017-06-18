@@ -7,9 +7,9 @@ package common;
 
 public interface MidiMessage {
 
-    byte[] getData();
+	byte[] getData();
 
-    byte[] toBytes();
+	byte[] toBytes();
 
-    int getLength();
+	int getLength();
 }

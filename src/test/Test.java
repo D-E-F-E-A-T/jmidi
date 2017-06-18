@@ -15,7 +15,7 @@ public class Test {
 		SysexMessage sys = new SysexMessage();
 		
 		msg.setMessage(ShortMessage.PROGRAM_CHANGE, 8, 0);
-        receiver.send(msg, -1);
+		receiver.send(msg, -1);
 		
 		for (int i = 0; i < MELODY.length; i++) {
 			byte[] data = new byte[] { (byte) 0xF0, 0x7F, 0x7F, 4, 1, 0, 127, (byte) 0xF7 };

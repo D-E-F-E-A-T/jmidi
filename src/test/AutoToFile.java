@@ -5,40 +5,45 @@ import java.io.*;
 import common.*;
 import jmidi.*;
 
+/**
+ * 自动作曲，生成到文件并播放
+ * 
+ * @author vermisse
+ */
 public class AutoToFile {
-	
+
 	public static void main(String... args) throws Exception {
-        File file = new File("d://test.mid");
-        
+		File file = new File("d://test.mid");
+
 		int section = 1; // 当前第几小节
 		int prev = 9; // 上一个音符，初始化设置为9
 		int range = 15; // 随机生成的音符范围
 		int[] rhythm = Rhythm.get(Note.rand(Rhythm.data.length)); // 随机选择节奏型
 		int[] path = Path.get(Note.rand(Path.data.length)); // 随机选择走向
-		
+
 		int bpm = 120; // 速度，类库要求，不清楚具体用途
 		int velocity = 25; // 这个参数决定速度，不能大于bpm
 		int max = 64; // 生成多少小节
-		
-        Sequence sequence = new Sequence();
-        Track main = sequence.createTrack();
-        main.add(new MidiEvent(MetaMessage.tempoMessage(bpm), 0));
-        
-        Track trackMelody = sequence.createTrack();
-        Track trackChord = sequence.createTrack();
-        
-        int index = 0;
+
+		Sequence sequence = new Sequence();
+		Track main = sequence.createTrack();
+		main.add(new MidiEvent(MetaMessage.tempoMessage(bpm), 0));
+
+		Track trackMelody = sequence.createTrack();
+		Track trackChord = sequence.createTrack();
+
+		int index = 0;
 		while (index++ < max) {
 			for (int i = 0, chd = 0; i < rhythm.length; i++) {
 				int pos = (bpm - velocity) * (index * rhythm.length + i); // 计算音符时间
-				
+
 				// 旋律区
 				{
 					for (int count = 0, key = Note.rand(range); count < 3 || section == 1; count++) {
 						if (chk(key, prev, path[section - 1])) {
 							int area = (prev = key) / 6; // 转换成区域
 							int melody = Note.melody(key); // 转换成音符
-							
+
 							trackMelody.add(Note.key(area, melody), pos, 127);
 							break;
 						}
@@ -57,13 +62,16 @@ public class AutoToFile {
 			}
 			section = (section == path.length) ? 1 : section + 1;
 		}
-        
-        FileOutputStream out = new FileOutputStream(file);
-        MidiFileWriter.write(sequence, out);
-        
-        new Play(file);
+
+		FileOutputStream out = new FileOutputStream(file);
+		MidiFileWriter.write(sequence, out);
+
+		new Play(file);
 	}
 
+	/**
+	 * 虽然目前只有一行，这个方法就是y=f(x)的f
+	 */
 	public static boolean chk(int key, int prev, int path) {
 		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, Note.melody(key));
 	}

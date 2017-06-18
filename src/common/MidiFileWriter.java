@@ -68,7 +68,7 @@ public class MidiFileWriter {
     }
 
     private static void writeTrackLength(Track track, OutputStream out) throws IOException {
-        out.write(intToBytes(track.getLength(), 4));
+		out.write(intToBytes(track.getLength(), 4));
     }
 
     private static void writeMidiEvent(MidiEvent event, OutputStream out, long actualTimeIndex) throws IOException {
