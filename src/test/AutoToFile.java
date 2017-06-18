@@ -13,11 +13,12 @@ public class AutoToFile {
 		int section = 1; // 当前第几小节
 		int prev = 9; // 上一个音符，初始化设置为9
 		int range = 15; // 随机生成的音符范围
-		int[] rhythm = Rhythm.get(rand(Rhythm.data.length)); // 随机选择节奏型
-		int[] path = Path.get(rand(Path.data.length)); // 随机选择走向
+		int[] rhythm = Rhythm.get(Note.rand(Rhythm.data.length)); // 随机选择节奏型
+		int[] path = Path.get(Note.rand(Path.data.length)); // 随机选择走向
 		
-		int bpm = 120;
-		int max = 64; //生成多少小节
+		int bpm = 120; // 速度，类库要求，不清楚具体用途
+		int velocity = 25; // 这个参数决定速度，不能大于bpm
+		int max = 64; // 生成多少小节
 		
         Sequence sequence = new Sequence();
         Track main = sequence.createTrack();
@@ -29,19 +30,19 @@ public class AutoToFile {
         int index = 0;
 		while (index++ < max) {
 			for (int i = 0, chd = 0; i < rhythm.length; i++) {
-				int tmp = (bpm - 30) * (index * rhythm.length + i);
+				int pos = (bpm - velocity) * (index * rhythm.length + i); // 计算音符时间
 				
 				// 旋律区
 				{
-					for (int count = 0, key = rand(range); count < 3 || section == 1; count++) {
+					for (int count = 0, key = Note.rand(range); count < 3 || section == 1; count++) {
 						if (chk(key, prev, path[section - 1])) {
 							int area = (prev = key) / 6; // 转换成区域
-							int melody = melody(key); // 转换成音符
+							int melody = Note.melody(key); // 转换成音符
 							
-							trackMelody.add(Note.key(area, melody), tmp, 127);
+							trackMelody.add(Note.key(area, melody), pos, 127);
 							break;
 						}
-						key = rand(range); // 生成的音符不符合规范，重新生成，有3次机会，如果是第一小节，必须全部生成
+						key = Note.rand(range); // 生成的音符不符合规范，重新生成，有3次机会，如果是第一小节，必须全部生成
 					}
 				}
 				// 和弦区
@@ -50,7 +51,7 @@ public class AutoToFile {
 						int[][] chords = Chord.get(path[section - 1]);
 						int[] chord = chords[chd++ % chords.length];
 
-						trackChord.add(Note.key(chord[0], chord[1]), tmp, 95);
+						trackChord.add(Note.key(chord[0], chord[1]), pos, 95);
 					}
 				}
 			}
@@ -63,15 +64,7 @@ public class AutoToFile {
         new Play(file);
 	}
 
-	private static int melody(int key) {
-		return (key %= 6) > 2 ? key + 2 : key + 1;
-	}
-
-	private static boolean chk(int key, int prev, int path) {
-		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, melody(key));
-	}
-
-	private static int rand(int range) {
-		return (int) (Math.random() * range);
+	public static boolean chk(int key, int prev, int path) {
+		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, Note.melody(key));
 	}
 }

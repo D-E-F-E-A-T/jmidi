@@ -24,4 +24,12 @@ public class Note {
 		}
 		return result;
 	}
+
+	public static int melody(int key) {
+		return (key %= 6) > 2 ? key + 2 : key + 1;
+	}
+
+	public static int rand(int range) {
+		return (int) (Math.random() * range);
+	}
 }

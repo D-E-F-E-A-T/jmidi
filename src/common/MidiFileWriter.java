@@ -9,10 +9,7 @@
  */
 package common;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 public class MidiFileWriter {
 
@@ -99,25 +96,5 @@ public class MidiFileWriter {
             default:
                 return new byte[]{(byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value};
         }
-    }
-
-    public static void main(String[] args) throws MidiException, IOException {
-        Sequence sequence = new Sequence();
-        Track trackOne = sequence.createTrack();
-        trackOne.add(new MidiEvent(MetaMessage.tempoMessage(120), 0));
-        Track trackTwo = sequence.createTrack();
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 60, 80), 50));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOff(0, 60, 100), 340));
-
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 60, 80), 100));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 62, 100), 200));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 64, 80), 300));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 65, 100), 400));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOn(0, 67, 80), 500));
-        trackTwo.add(new MidiEvent(ChannelMessage.noteOff(0, 67, 80), 900));
-        
-        File file = new File("d://test.mid");
-        FileOutputStream out = new FileOutputStream(file);
-        MidiFileWriter.write(sequence, out);
     }
 }

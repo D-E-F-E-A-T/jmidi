@@ -5,11 +5,7 @@
  */
 package common;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import jmidi.Note;
+import java.util.*;
 
 public class Track {
 
