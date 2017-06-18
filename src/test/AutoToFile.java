@@ -32,23 +32,18 @@ public class AutoToFile {
 		Track trackMelody = sequence.createTrack();
 		Track trackChord = sequence.createTrack();
 
+		prev = must(trackMelody, range, prev, path[section - 1], velocity);
+		prev = must(trackMelody, range, prev, path[section - 1], bpm);
+		
 		int index = 0;
-		while (index++ < max) {
+		do {
 			for (int i = 0, chd = 0; i < rhythm.length; i++) {
-				int pos = (bpm - velocity) * (index * rhythm.length + i); // 计算音符时间
-
+				int pos = (bpm - velocity) * ((index * rhythm.length + i) +  2) + velocity; // 计算音符时间
+				
 				// 旋律区
 				{
-					for (int count = 0, key = Note.rand(range); count < 3 || section == 1; count++) {
-						if (chk(key, prev, path[section - 1])) {
-							int area = (prev = key) / 6; // 转换成区域
-							int melody = Note.melody(key); // 转换成音符
-
-							trackMelody.add(Note.key(area, melody), pos, 127);
-							break;
-						}
-						key = Note.rand(range); // 生成的音符不符合规范，重新生成，有3次机会，如果是第一小节，必须全部生成
-					}
+					int[] count = (section == 1) ? new int[] {} : new int[] { 3 };
+					prev = must(trackMelody, range, prev, path[section - 1], pos, count);
 				}
 				// 和弦区
 				{
@@ -61,7 +56,7 @@ public class AutoToFile {
 				}
 			}
 			section = (section == path.length) ? 1 : section + 1;
-		}
+		} while (index++ < max);
 
 		FileOutputStream out = new FileOutputStream(file);
 		MidiFileWriter.write(sequence, out);
@@ -72,7 +67,25 @@ public class AutoToFile {
 	/**
 	 * 虽然目前只有一行，这个方法就是y=f(x)的f
 	 */
-	public static boolean chk(int key, int prev, int path) {
+	private static boolean chk(int key, int prev, int path) {
 		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, Note.melody(key));
+	}
+	
+	private static int must(Track track, int range, int prev, int path, int pos, int... max) throws Exception {
+		int i = 0;
+		int count = (max.length > 0) ? max[0] : 0;
+		
+		do {
+			int key = Note.rand(range);
+			if (chk(key, prev, path)) {
+				int area = key / 6; // 转换成区域
+				int melody = Note.melody(key); // 转换成音符
+
+				track.add(Note.key(area, melody), pos, 127);
+				return key;
+			}
+		} while (i++ < count || max.length == 0);
+		
+		return prev;
 	}
 }

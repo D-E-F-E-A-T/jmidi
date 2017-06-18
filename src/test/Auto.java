@@ -7,6 +7,7 @@ import jmidi.*;
  * 
  * @author vermisse
  */
+@Deprecated
 public class Auto {
 
 	public static void main(String[] args) throws Exception {
