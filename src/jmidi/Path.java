@@ -7,7 +7,7 @@ package jmidi;
  */
 public class Path {
 	
-	public static int[][] data = new int[][]{
+	private static final int[][] data = new int[][]{
 		{ 4, 5, 3, 6 },
 		{ 6, 4, 1, 5 },
 		{ 6, 5, 4, 3, 2, 3, 4, 5 },
@@ -21,5 +21,9 @@ public class Path {
 			return data[seed];
 		
 		return new int[0];
+	}
+	
+	public static int size(){
+		return data.length;
 	}
 }

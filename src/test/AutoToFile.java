@@ -18,12 +18,12 @@ public class AutoToFile {
 		int section = 1; // 当前第几小节
 		int prev = 9; // 上一个音符，初始化设置为9
 		int range = 15; // 随机生成的音符范围
-		int[] rhythm = Rhythm.get(Note.rand(Rhythm.data.length)); // 随机选择节奏型
-		int[] path = Path.get(Note.rand(Path.data.length)); // 随机选择走向
+		int[] rhythm = Rhythm.get(Note.rand(Rhythm.size())); // 随机选择节奏型
+		int[] path = Path.get(Note.rand(Path.size())); // 随机选择走向
 
 		int bpm = 120; // 速度，类库要求，不清楚具体用途
 		int velocity = 25; // 这个参数决定速度，不能大于bpm
-		int max = 64; // 生成多少小节
+		int max = 64; // 生成多少小节，最好是8的倍数
 
 		Sequence sequence = new Sequence();
 		Track main = sequence.createTrack();
@@ -63,10 +63,7 @@ public class AutoToFile {
 
 		new Play(file);
 	}
-
-	/**
-	 * 虽然目前只有一行，这个方法就是y=f(x)的f
-	 */
+	
 	private static boolean chk(int key, int prev, int path) {
 		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, Note.melody(key));
 	}

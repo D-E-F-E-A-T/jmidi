@@ -57,11 +57,7 @@ public class Play {
 					}
 				}
 			});
-		} catch (MalformedURLException e) {
-		} catch (IOException e) {
-		} catch (MidiUnavailableException e) {
-		} catch (InvalidMidiDataException e) {
-		}
+		} catch (Exception e) {}
 	}
 
 	public void melody(int key) {
