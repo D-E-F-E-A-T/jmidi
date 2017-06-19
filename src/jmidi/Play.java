@@ -51,7 +51,7 @@ public class Play {
 			sequencer.start();
 			sequencer.addMetaEventListener(new MetaEventListener() {
 				public void meta(MetaMessage event) {
-					// Sequencer is done playing
+					// 播放完毕
 					if (event.getType() == 47) {
 						System.exit(0);
 					}

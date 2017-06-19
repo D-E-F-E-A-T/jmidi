@@ -1,5 +1,10 @@
 package jmidi;
 
+/**
+ * 节奏型
+ * 
+ * @author vermisse
+ */
 public class Rhythm {
 
 	private static final int[][] data = new int[][] {
@@ -20,5 +25,9 @@ public class Rhythm {
 	
 	public static int size(){
 		return data.length;
+	}
+	
+	public static int[] rand(){
+		return get(Note.rand(data.length));
 	}
 }

@@ -26,4 +26,8 @@ public class Path {
 	public static int size(){
 		return data.length;
 	}
+	
+	public static int[] rand(){
+		return get(Note.rand(data.length));
+	}
 }
