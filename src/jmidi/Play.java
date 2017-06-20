@@ -1,7 +1,6 @@
 package jmidi;
 
 import java.io.*;
-import java.net.*;
 
 import javax.sound.midi.*;
 
@@ -47,6 +46,8 @@ public class Play {
 			final Sequencer sequencer = MidiSystem.getSequencer();
 			sequencer.open();
 			sequencer.setSequence(sequence);
+			
+			Thread.sleep(500);
 			// Start playing
 			sequencer.start();
 			sequencer.addMetaEventListener(new MetaEventListener() {

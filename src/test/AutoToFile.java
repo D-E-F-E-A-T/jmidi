@@ -13,7 +13,7 @@ import jmidi.*;
 public class AutoToFile {
 
 	public static void main(String... args) throws Exception {
-		File file = new File("d://test.mid");
+		File file = new File("e://test.mid");
 
 		int section = 1; // 当前第几小节，用于选择走向
 		int prev = 9; // 上一个音符，初始化设置为9
@@ -22,7 +22,7 @@ public class AutoToFile {
 		int[] path = Path.rand(); // 随机选择走向
 
 		int bpm = 120; // 速度，类库要求，不清楚具体用途
-		int velocity = 25; // 这个参数决定速度，不能大于bpm
+		int velocity = 30; // 这个参数决定速度，不能大于bpm
 		int max = 64; // 生成多少小节，最好是8的倍数
 
 		Sequence seq = new Sequence();
@@ -42,8 +42,12 @@ public class AutoToFile {
 				
 				// 旋律区
 				{
-					int[] count = (section == 1) ? new int[0] : new int[] { 3 };
-					prev = must(trackMelody, range, prev, path[section - 1], pos, count);
+					if(section == path.length){
+						if(i > 0 && Note.melody(prev) != Chord.get(path[section - 1])[0][1])
+							prev = must(trackMelody, range, prev, path[section - 1], pos);
+					}else{
+						prev = must(trackMelody, range, prev, path[section - 1], pos, 3);
+					}
 				}
 				// 和弦区
 				{

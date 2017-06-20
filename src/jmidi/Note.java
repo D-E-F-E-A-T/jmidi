@@ -51,6 +51,7 @@ public class Note {
 			switch ((i % 7) + 1) {
 			case 1:
 			case 4:
+			case 6:
 				result++;
 				break;
 			case 5:
