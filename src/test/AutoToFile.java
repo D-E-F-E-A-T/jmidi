@@ -24,7 +24,7 @@ public class AutoToFile {
 	private static int prev = 9; // 上一个音符，初始化设置为9
 
 	public static void main(String... args) throws Exception {
-		File file = new File("e://test.mid");
+		File file = new File("d://test.mid");
 
 		Sequence seq = new Sequence();
 		Track main = seq.createTrack();
@@ -70,9 +70,9 @@ public class AutoToFile {
 	}
 	
 	private static boolean chk(int key, int root) {
-		if (key - prev > 5)
+		if (key - prev > 3)
 			return false;
-		if (prev - key > 5)
+		if (prev - key > 3)
 			return false;
 		if (key == prev)
 			return false;

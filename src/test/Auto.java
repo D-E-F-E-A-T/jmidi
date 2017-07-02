@@ -50,6 +50,6 @@ public class Auto {
 	}
 
 	public static boolean chk(int key, int prev, int path) {
-		return key - prev < 5 && key - prev > -5 && key != prev && Melody.get(path, Note.melody(key));
+		return key - prev < 3 && key - prev > -3 && key != prev && Melody.get(path, Note.melody(key));
 	}
 }
