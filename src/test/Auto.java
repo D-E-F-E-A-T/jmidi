@@ -15,7 +15,7 @@ public class Auto {
 
 		int section = 1; // 当前第几小节
 		int prev = 9; // 上一个音符，初始化设置为9
-		int range = 15; // 随机生成的音符范围
+		byte range = 15; // 随机生成的音符范围
 		byte[] rhythm = Rhythm.get(Note.rand(Rhythm.size())); // 随机选择节奏型
 		byte[] path = Path.get(Note.rand(Path.size())); // 随机选择走向
 

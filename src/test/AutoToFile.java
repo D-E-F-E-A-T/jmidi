@@ -17,7 +17,7 @@ public class AutoToFile {
 	private static final byte[] path = Path.rand(); // 随机选择走向
 
 	private static final int bpm = 128; // 速度
-	private static final int velocity = 96; // 96代表八分之一拍，192是四分之一拍
+	private static final int velocity = 96; // 96代表半拍，192是一拍
 	private static final int max = 64; // 生成多少小节，最好是8的倍数
 
 	private static int section = 1; // 当前第几小节，用于选择走向
