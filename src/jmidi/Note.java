@@ -7,7 +7,7 @@ package jmidi;
  */
 public class Note {
 
-	private static final int CENTER = 60;
+	private static final byte CENTER = 60;
 
 	/**
 	 * 音阶
@@ -25,10 +25,10 @@ public class Note {
 	/**
 	 * 自然调音阶
 	 */
-	public static int naturalTone(int area, int note) {
-		int result = CENTER - 1;
+	public static byte naturalTone(int area, int note) {
+		byte result = CENTER - 1;
 		result += 12 * area;
-		for (int i = 0; i < note; i++) {
+		for (byte i = 0; i < note; i++) {
 			switch ((i % 7) + 1) {
 			case 1:
 			case 4:
@@ -44,10 +44,10 @@ public class Note {
 	/**
 	 * 和声调音阶
 	 */
-	public static int andTone(int area, int note) {
-		int result = CENTER - 1;
+	public static byte andTone(int area, int note) {
+		byte result = CENTER - 1;
 		result += 12 * area;
-		for (int i = 0; i < note; i++) {
+		for (byte i = 0; i < note; i++) {
 			switch ((i % 7) + 1) {
 			case 1:
 			case 4:

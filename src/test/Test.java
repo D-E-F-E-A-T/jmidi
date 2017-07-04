@@ -20,7 +20,7 @@ public class Test {
 		for (int i = 0; i < MELODY.length; i++) {
 			byte[] data = new byte[] { (byte) 0xF0, 0x7F, 0x7F, 4, 1, 0, 127, (byte) 0xF7 };
 			
-			int[] note = MELODY[i];
+			byte[] note = MELODY[i];
 			if(note.length != 0){
 				sys.setMessage(data, data.length);
 				receiver.send(sys, -1);
@@ -43,12 +43,12 @@ public class Test {
 		}
 	}
 
-	private static final int CENTER = 60;
+	private static final byte CENTER = 60;
 	
 	/**
 	 * 旋律
 	 */
-	private static final int[][] MELODY = new int[][] {
+	private static final byte[][] MELODY = new byte[][] {
 		{2,3},{},{2,3},{2,4},{2,3},{},{2,2},{2,1},
 		{2,2},{},{2,5},{2,2},{2,2},{},{},{},
 		{2,1},{},{2,1},{2,2},{2,1},{},{1,7},{1,6},
@@ -71,7 +71,7 @@ public class Test {
 	/**
 	 * 和弦
 	 */
-	private static final int[][] CHORD = new int[][] {
+	private static final byte[][] CHORD = new byte[][] {
 		{0,1},{0,5},{1,1},{1,2},{1,3},{},{1,5},{},
 		{-1,5},{0,2},{0,5},{0,7},{1,2},{0,7},{0,5},{0,2},
 		{-1,6},{0,3},{0,6},{0,7},{1,1},{},{1,3},{},
@@ -92,10 +92,10 @@ public class Test {
 	};
 
 	// area第几组，note是音符：1 2 3 4 5 6 7 / do re mi fa so la si，过滤掉了半音
-	public static int key(int area, int note) {
-		int result = CENTER - 1;
+	public static byte key(byte area, byte note) {
+		byte result = CENTER - 1;
 		result += 12 * area;
-		for (int i = 0; i < note; i++) {
+		for (byte i = 0; i < note; i++) {
 			switch ((i % 7) + 1) {
 			case 1:
 			case 4:

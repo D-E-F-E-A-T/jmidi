@@ -12,12 +12,12 @@ import jmidi.*;
  */
 public class AutoToFile {
 
-	private static final int range = 15; // 随机生成的音符范围
-	private static final int[] rhythm = Rhythm.rand(); // 随机选择节奏型
-	private static final int[] path = Path.rand(); // 随机选择走向
+	private static final byte range = 15; // 随机生成的音符范围
+	private static final byte[] rhythm = Rhythm.rand(); // 随机选择节奏型
+	private static final byte[] path = Path.rand(); // 随机选择走向
 
-	private static final int bpm = 120; // 速度，类库要求，不清楚具体用途
-	private static final int velocity = 30; // 这个参数决定速度，不能大于bpm
+	private static final int bpm = 128; // 速度
+	private static final int velocity = 96; // 96代表八分之一拍，192是四分之一拍
 	private static final int max = 64; // 生成多少小节，最好是8的倍数
 
 	private static int section = 1; // 当前第几小节，用于选择走向
@@ -34,12 +34,12 @@ public class AutoToFile {
 		Track trackChord = seq.createTrack();
 
 		prev = must(trackMelody, 0);
-		prev = must(trackMelody, bpm - velocity);
+		prev = must(trackMelody, velocity);
 		
 		int cur = 0;
 		do {
 			for (int i = 0, chd = 0; i < rhythm.length; i++) {
-				int pos = (bpm - velocity) * ((cur * rhythm.length + i) + 2); // 计算音符时间
+				int pos = velocity * ((cur * rhythm.length + i) + 2); // 计算音符时间
 				
 				// 旋律区
 				{
@@ -53,8 +53,8 @@ public class AutoToFile {
 				// 和弦区
 				{
 					if (rhythm[i] == 1) {
-						int[][] chords = Chord.get(path[section - 1]);
-						int[] chord = chords[chd++ % chords.length];
+						byte[][] chords = Chord.get(path[section - 1]);
+						byte[] chord = chords[chd++ % chords.length];
 
 						trackChord.add(Note.key(chord[0], chord[1]), pos, 95);
 					}
@@ -66,7 +66,7 @@ public class AutoToFile {
 		FileOutputStream out = new FileOutputStream(file);
 		MidiFileWriter.write(seq, out);
 
-		new Play(file);
+		new Play(file); // 播放
 	}
 	
 	private static boolean chk(int key, int root) {
