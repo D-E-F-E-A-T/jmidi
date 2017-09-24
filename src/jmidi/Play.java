@@ -15,7 +15,6 @@ public class Play {
 	
 	Receiver receiver;
 	ShortMessage msg = new ShortMessage();
-	SysexMessage sys = new SysexMessage();
 
 	public Play() {
 		try {
@@ -71,11 +70,7 @@ public class Play {
 	
 	private void base(byte volume, int key){
 		try {
-			byte[] data = new byte[] { (byte) 0xF0, 0x7F, 0x7F, 4, 1, 0, volume, (byte) 0xF7 };
-			sys.setMessage(data, data.length);
-			receiver.send(sys, -1);
-
-			msg.setMessage(ShortMessage.NOTE_ON, key, 127);
+			msg.setMessage(ShortMessage.NOTE_ON, key, volume);
 			receiver.send(msg, -1);
 		} catch (Exception e) {
 			e.printStackTrace();

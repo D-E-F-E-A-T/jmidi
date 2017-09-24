@@ -12,30 +12,20 @@ public class Test {
 	public static void main(String[] args) throws Exception {
 		Receiver receiver = MidiSystem.getReceiver();
 		ShortMessage msg = new ShortMessage();
-		SysexMessage sys = new SysexMessage();
 		
 		msg.setMessage(ShortMessage.PROGRAM_CHANGE, 8, 0);
 		receiver.send(msg, -1);
 		
 		for (int i = 0; i < MELODY.length; i++) {
-			byte[] data = new byte[] { (byte) 0xF0, 0x7F, 0x7F, 4, 1, 0, 127, (byte) 0xF7 };
-			
 			byte[] note = MELODY[i];
 			if(note.length != 0){
-				sys.setMessage(data, data.length);
-				receiver.send(sys, -1);
-				
 				msg.setMessage(ShortMessage.NOTE_ON, key(note[0], note[1]), 127);
 				receiver.send(msg, -1);
 			}
 			
 			note = CHORD[i];
 			if (note.length != 0) {
-				data[6] = 90;
-				sys.setMessage(data, data.length);
-				receiver.send(sys, -1);
-				
-				msg.setMessage(ShortMessage.NOTE_ON, key(note[0], note[1]), 127);
+				msg.setMessage(ShortMessage.NOTE_ON, key(note[0], note[1]), 100);
 				receiver.send(msg, -1);
 			}
 			

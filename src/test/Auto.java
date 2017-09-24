@@ -23,15 +23,12 @@ public class Auto {
 			for (int i = 0, chd = 0; i < rhythm.length; i++) {
 				// 旋律区
 				{
-					for (int count = 0, key = Note.rand(range); count < 3 || section == 1; count++) {
-						if (chk(key, prev, path[section - 1])) {
-							int area = (prev = key) / 6; // 转换成区域
-							int melody = Note.melody(key); // 转换成音符
-							
-							play.melody(Note.key(area, melody)); // 播放旋律
-							break;
-						}
-						key = Note.rand(range); // 生成的音符不符合规范，重新生成，有3次机会，如果是第一小节，必须全部生成
+					int root = path[section - 1];
+					if(section == path.length){ // 每次走向的最后一小节
+						if(i > 0 && Note.melody(prev) != root)
+							prev = must(play, range, prev, root); // 直到生成和弦根音为止
+					}else{
+						prev = must(play, range, prev, root, 3);
 					}
 				}
 				// 和弦区
@@ -51,5 +48,32 @@ public class Auto {
 
 	public static boolean chk(int key, int prev, int path) {
 		return key - prev < 3 && key - prev > -3 && key != prev && Melody.get(path, Note.melody(key));
+	}
+	
+	/**
+	 * 生成音符
+	 * 
+	 * @param track 音轨
+	 * @param pos 时间轴上的位置
+	 * @param count 重新生成次数，如果不传，一直生成，直到合法为止
+	 * @return
+	 * @throws Exception
+	 */
+	private static int must(Play play, byte range, int prev, int root, int... count) throws Exception {
+		int i = 0;
+		int max = (count.length > 0) ? count[0] : 0;
+		
+		do {
+			int key = Note.rand(range);
+			if (chk(key, prev, root)) {
+				int area = key / 6; // 转换成区域
+				int melody = Note.melody(key); // 转换成音符
+
+				play.melody(Note.key(area, melody));
+				return key;
+			}
+		} while (++i < max || count.length == 0);
+		
+		return prev;
 	}
 }
