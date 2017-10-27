@@ -46,9 +46,8 @@ public class Play {
 			sequencer.open();
 			sequencer.setSequence(sequence);
 			
-			Thread.sleep(500);
+			Thread.sleep(3000);
 			// Start playing
-			sequencer.start();
 			sequencer.addMetaEventListener(new MetaEventListener() {
 				public void meta(MetaMessage event) {
 					// 播放完毕
@@ -57,6 +56,7 @@ public class Play {
 					}
 				}
 			});
+			sequencer.start();
 		} catch (Exception e) {}
 	}
 
@@ -68,7 +68,7 @@ public class Play {
 		base((byte) 90, key);
 	}
 	
-	private void base(byte volume, int key){
+	private void base(byte volume, int key) {
 		try {
 			msg.setMessage(ShortMessage.NOTE_ON, key, volume);
 			receiver.send(msg, -1);

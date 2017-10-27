@@ -10,7 +10,7 @@ import jmidi.*;
  * 
  * @author vermisse
  */
-public class AutoToFile {
+public class Generate {
 
 	private static final byte range = 15; // 随机生成的音符范围
 	private static final byte[] rhythm = Rhythm.rand(); // 随机选择节奏型
@@ -43,10 +43,10 @@ public class AutoToFile {
 				
 				// 旋律区
 				{
-					if(section == path.length){ // 每次走向的最后一小节
-						if(i > 0 && Note.melody(prev) != path[section - 1])
+					if (section == path.length) { // 每次走向的最后一小节
+						if (i > 0 && Note.melody(prev) != path[section - 1])
 							prev = must(trackMelody, pos); // 直到生成和弦根音为止
-					}else{
+					} else {
 						prev = must(trackMelody, pos, 3);
 					}
 				}
