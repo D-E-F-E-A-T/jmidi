@@ -16,7 +16,7 @@ public class Generate {
 	private static final byte[] rhythm = Rhythm.rand(); // 随机选择节奏型
 	private static final byte[] path = Path.rand(); // 随机选择走向
 
-	private static final int bpm = 128; // 速度
+	private static final int bpm = 118; // 速度
 	private static final int velocity = 96; // 96代表半拍，192是一拍
 	private static final int max = 64; // 生成多少小节，最好是8的倍数
 
@@ -24,7 +24,7 @@ public class Generate {
 	private static int prev = 9; // 上一个音符，初始化设置为9
 
 	public static void main(String... args) throws Exception {
-		File file = new File("d://test.mid");
+		File file = new File("e://test.mid");
 
 		Sequence seq = new Sequence();
 		Track main = seq.createTrack();

@@ -9,10 +9,10 @@ import jmidi.*;
  */
 public class Test {
 
-	private static int TUNE = 7;
+	private static int TUNE = 4;
 	
 	public static void main(String[] args) throws Exception {
-		Play play = new Play(11); // 设置音色
+		Play play = new Play(2); // 设置音色
 
 		int section = 1; // 当前第几小节
 		int prev = 9; // 上一个音符，初始化设置为9
