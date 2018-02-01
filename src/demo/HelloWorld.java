@@ -1,4 +1,4 @@
-package test;
+package demo;
 
 import javax.sound.midi.*;
 
@@ -7,7 +7,7 @@ import javax.sound.midi.*;
  * 
  * @author vermisse
  */
-public class Demo {
+public class HelloWorld {
 	
 	public static void main(String[] args) throws Exception {
 		Receiver receiver = MidiSystem.getReceiver();
@@ -69,7 +69,7 @@ public class Demo {
 		byte result = CENTER - 1;
 		result += 12 * area;
 		for (byte i = 0; i < note; i++) {
-			switch ((i % 7) + 1) {
+			switch (i % 7 + 1) {
 			case 1:
 			case 4:
 				result++;
