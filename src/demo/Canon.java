@@ -37,7 +37,7 @@ public class Canon {
 
 	static Receiver receiver;
 	static ShortMessage msg = new ShortMessage();
-	static {try {receiver = MidiSystem.getReceiver(); msg.setMessage(ShortMessage.PROGRAM_CHANGE, 2, 0); receiver.send(msg, -1);} catch (Exception e) {}}
+	static {try {receiver = MidiSystem.getReceiver(); msg.setMessage(ShortMessage.PROGRAM_CHANGE, 0, 0); receiver.send(msg, -1);} catch (Exception e) {}}
 
 	static final byte CENTER = 62;
 	
